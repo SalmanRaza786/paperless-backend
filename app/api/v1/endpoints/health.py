@@ -1,11 +1,4 @@
-from fastapi import APIRouter
+"""Backward compatibility re-export for the health endpoint."""
+from app.modules.health.router import router
 
-router = APIRouter()
-
-
-@router.get("/health", summary="Health check endpoint")
-async def health_check():
-    return {
-        "status": "healthy",
-        "service": "paperless-backend"
-    }
+__all__ = ["router"]
