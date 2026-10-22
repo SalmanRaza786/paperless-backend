@@ -1,5 +1,6 @@
 """Database layer package."""
-from app.db.base import BaseEntitySchema
-from app.db.session import get_db
+from app.db.base_class import Base
+from app.db.base import *
+from app.db.session import get_db, engine, AsyncSessionLocal
 
-__all__ = ["BaseEntitySchema", "get_db"]
+__all__ = ["Base", "get_db", "engine", "AsyncSessionLocal"]

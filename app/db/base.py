@@ -1,14 +1,51 @@
-"""Database base models and interfaces."""
-from datetime import datetime
-from typing import Optional
-from pydantic import BaseModel, Field
+"""Database models export for Alembic and application runtime."""
+from app.db.base_class import Base
+from app.modules.auth.models import (
+    Tenant,
+    User,
+    Role,
+    TenantUser,
+    OTPVerification,
+    UserSession,
+    TenantInvitation,
+    AuthAuditLog,
+    Permission,
+    RolePermission,
+    UserPermissionOverride,
+    TenantStatus,
+    SubscriptionTier,
+    OTPPurpose,
+    OTPChannel,
+    OTPDeliveryStatus,
+    TwoFactorMethod,
+    InviteStatus,
+)
 
+from app.modules.plans.models import SubscriptionPlan
+from app.modules.branches.models import Branch, BranchType
 
-class BaseEntitySchema(BaseModel):
-    """Base schema for database entities with timestamp tracking."""
-    id: Optional[int] = None
-    created_at: datetime = Field(default_factory=datetime.utcnow)
-    updated_at: datetime = Field(default_factory=datetime.utcnow)
+__all__ = [
+    "Base",
+    "Tenant",
+    "User",
+    "Role",
+    "TenantUser",
+    "OTPVerification",
+    "UserSession",
+    "TenantInvitation",
+    "AuthAuditLog",
+    "Permission",
+    "RolePermission",
+    "UserPermissionOverride",
+    "TenantStatus",
+    "SubscriptionTier",
+    "OTPPurpose",
+    "OTPChannel",
+    "OTPDeliveryStatus",
+    "TwoFactorMethod",
+    "InviteStatus",
+    "SubscriptionPlan",
+    "Branch",
+    "BranchType",
+]
 
-    class Config:
-        from_attributes = True

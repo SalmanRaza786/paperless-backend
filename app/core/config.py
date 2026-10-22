@@ -13,6 +13,16 @@ class Settings(BaseSettings):
         "http://127.0.0.1:3000",
     ]
 
+    # Database
+    DATABASE_URL: str = "postgresql+asyncpg://postgres:1234@localhost:5432/paperless_db"
+    SYNC_DATABASE_URL: str = "postgresql://postgres:1234@localhost:5432/paperless_db"
+
+    # JWT Security
+    SECRET_KEY: str = "paperless_super_secret_jwt_key_2026_dev"
+    ALGORITHM: str = "HS256"
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 60
+    REFRESH_TOKEN_EXPIRE_DAYS: int = 30
+
     model_config = SettingsConfigDict(
         env_file=".env",
         env_file_encoding="utf-8",

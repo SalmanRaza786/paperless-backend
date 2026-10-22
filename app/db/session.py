@@ -1,16 +1,27 @@
 """Database connection and session lifecycle management."""
-from typing import Generator, Any
+from typing import AsyncGenerator
+from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
+from app.core.config import settings
+
+engine = create_async_engine(
+    settings.DATABASE_URL,
+    echo=False,
+    future=True,
+    pool_pre_ping=True,
+)
+
+AsyncSessionLocal = async_sessionmaker(
+    bind=engine,
+    class_=AsyncSession,
+    expire_on_commit=False,
+    autoflush=False,
+)
 
 
-def get_db() -> Generator[Any, None, None]:
-    """
-    Dependency generator for obtaining a database session.
-    Yields session and guarantees teardown.
-    Configure with your ORM/database driver sessionmaker when added.
-    """
-    db = None
-    try:
-        yield db
-    finally:
-        if db is not None and hasattr(db, "close"):
-            db.close()
+async def get_db() -> AsyncGenerator[AsyncSession, None]:
+    """Dependency generator for obtaining an async database session."""
+    async with AsyncSessionLocal() as session:
+        try:
+            yield session
+        finally:
+            await session.close()
